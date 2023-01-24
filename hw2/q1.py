@@ -45,7 +45,7 @@ def find_motif_freq(motif, seq):
     """
     Q:  given a target motif, find its frequency in a dna strand.
     Ex:
-    >>> find_motif_freq("AA", "AAAAAAAAAA")
+    >>> find_motif_freq("AA", "AAAAAAAAA")
     8
     >>> find_motif_freq("ATC", "ACTGACTATCGTCAGTCGATCTAATCCTG")
     3
