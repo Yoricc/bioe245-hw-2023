@@ -37,11 +37,12 @@ class GaussianDiscriminator:
 
     def fit(self, X, y, num_classes):
         """
-        This function fits the dataset to different Gaussian distributions
+        This function fits a Gaussian distribution to each class in the dataset.
+	These Gaussian distributions are appended to self.gaussians as a tuple consisting of (class_label, mean, covariance)
 
         Inputs
         - X: the data, numpy array with shape (n, d) = (sample size, feature dims)
-        - y: the labels, numpy array with shape (n, ) and integers from 0, ..., k-1
+        - y: the class labels, numpy array with shape (n, ) and integers from 0, ..., num_classes-1 
         - num_classes: the number of classes, int
 
         Outputs
@@ -57,10 +58,10 @@ class GaussianDiscriminator:
 
     def predict(self, x):
         """
-        This function will classify the dataset x
+        This function will classify the dataset x, returning a predicted label for each datapoint.
 
         Inputs
-        - x: data to be predicted, numpy array with shape (n, d)
+        - x: data to be predicted, numpy array with shape (n, d) = (sample size, feature dims)
 
         Outputs
         - pred: np.array with shape (n, ), where each item is the classification of each data
