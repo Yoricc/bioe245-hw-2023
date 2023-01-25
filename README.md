@@ -19,6 +19,6 @@ If you have Python already installed, you can simply install the packages by run
     pip3 install sklearn numpy scipy pandas matplotlib
 
 
-Course instructor: Liana Lareau
-Graduate Student Instructor: Helen Sakharova
+Course instructor: Liana Lareau \
+Graduate Student Instructor: Helen Sakharova \
 Reader & Homework author/maintenance: Yorick Chern
