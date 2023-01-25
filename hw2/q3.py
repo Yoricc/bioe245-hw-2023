@@ -80,7 +80,7 @@ class GaussianDiscriminator:
 if __name__ == '__main__':
 
 	# do not make any modifications here, it's a simple visualization for your implementation.
-    X, y = make_data(1200, 2, 2, sep=1.0)
+    X, y = make_data(1200, 2, 2, sep=3.0)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     idx = np.where(y_train == 0)[0]
