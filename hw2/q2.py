@@ -118,7 +118,7 @@ def roll_until_repeat(n_sided, trials=1000000):
 if __name__ == '__main__':
 	# some test cases for you to follow
     # print(num_die_sum(2, 4))              # 0.08319
-    # print(correct_papers(1000))           # 2.000
+    # print(correct_papers(1000))           # 1.000
     # print(monte_carlo_pi(1000000))        # 3.14
     # print(roll_until_repeat(6, 10000))    # 5
     pass
