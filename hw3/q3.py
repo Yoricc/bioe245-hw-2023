@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from itertools import product
 
 def read_data(file_name, test_size=0.2):
     """
@@ -34,25 +35,35 @@ def read_data(file_name, test_size=0.2):
     - y_train: np.array with shape (N * (1 - test_size)); y[i] is X[i]'s ground-truth label
     - y_test: np.array with shape (N * test_size)
     """
-    X = []
-    y = []
-    # use any method you like
-    ...
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
+
+    # TODO: use your favorite methods to complete this section - no restriction (do not import any foreign packages, but train_test_split is ok)
+
+    assert type(X_train) == type(X_test) == type(y_train) == type(y_test) == np.ndarray, f"read_data() NEEDS to output np.ndarray, instead it's {type(X_train)}!"
     return X_train, X_test, y_train, y_test
 
 def build_transition_matrix(data, k):
     """
-    Q:  here, we will build a transition matrix for a set of sequence.
-        suppose we have a sequence "ACTAGCTAGC..." and k=3, then we buld our states like so:
-        ex: states = [ACT, CTA, TAG, AGC,...]. then, we build a 2D transition matrix where
-        mat[i, j] = probability of state i transitioning to state j.
-        ex: mat[3, 1] = probability of state 3 to state 1.
+    Q:  Here, we will build a transition matrix for a set of sequences.
+        Suppose we have a sequence "ACTAGCTACT..." and k = 3, then the 
+        list of states for this sequence will be:
+        ex: states = [ACT, CTA, TAC, ACT,...]. 
+        
+        In order to make it easier for ourselves, we will create a dictionary
+        mapping every kmer state to an integer label. So, if our
+        kmer2idx dictionary is {'ACT' : 0, 'CTA' : 1, 'TAC' : 2, ...}
+        then the states above can be written as [0, 1, 2, 1 ..]
+        
+        Next, we build a 2D transition matrix where
+        trans_prob[i, j] = probability of state i transitioning to state j.
+        ex: trans_prob[3, 1] = probability of state 3 to state 1. 
 
-        how do we get this number? say we want to find mat[1, 2], which is the transition probability
-        of 'CTA' to 'TAG'. we count how many transitions from 'CTA' to 'TAG' there are and divide
+        How do we get this number? Say we want to find trans_prob[1, 2], which is the transition probability
+        of 'CTA' to 'TAC'. We count how many transitions from 'CTA' to 'TAC' there are and divide
         this number by the TOTAL number of transitions in the entire dataset, and this gives us
-        Pr['CTA' | 'TAG']!
+        Pr['CTA' | 'TAC']. However, notice that 'CTA' to 'TAC' in reality is just 'CTAC', we can also consider rewrite this
+        as Pr['C' | 'CTA']. Then, we define our transition matrix as a (64, 4) matrix where each row is a possible 3-mer
+        and each of the 4 columns is A, G, T, or C. Then, we realize that:
+        Pr['A' | 'CTA'] + Pr['T' | 'CTA'] + Pr['G' | 'CTA'] + Pr['C' | 'CTA'] = 1
 
     Inputs
     - data: np.array with shape (training size); each item is a sequence from the dataset
@@ -60,35 +71,33 @@ def build_transition_matrix(data, k):
 
     Outputs
     - kmer2idx: a dictionary that gives us the index of each kmer (ex: kmer2idx['ATC'] = 2 and
-                kmer2idx['TCG'] = 4, then trans_mat[2][4] is the probability of "ATCG" happening)
+                kmer2idx['TCG'] = 4, then trans_mat[2][4] is the probability of "ATCG" happening, 
+                given that we started with "ATC")
                 this is important as it helps us understand what the transition matrix (trans_probs)
                 means.
     - trans_probs: np.array with shape (# of states, # of states) with the properties described above
     """
 
-    # Grab all kmers from all sequences
-    kmer_list = []
+
+    # Initialize transition probability matrix & generate all possible kmers
+    trans_prob = ...
+    kmers = ...     # generate a list of all possible kmers combinations, use itertools.product() - read the docs
+    # build a dictionary to map each kmer to an integer, this will allow us to keep track of where each kmer
+    # is located in the transition matrix (trans_prob)
+    kmer2idx = {}   # kmer2idx['ATC'] = 4, for example
+    nt2idx = {'A': 0, 'G': 1, 'T': 2, 'C': 3}   # do not modify this
+    
+    # Iterate through the data to count each transition
     for seq in data:
-        for i in ...:
-            ...
+        ...
 
-    kmer_list = ...    # remove duplicates
-    kmer2idx = dict(zip(kmer_list, [i for i in range(len(kmer_list))])) # this creates a dictionary that you will use to access a kmer's index
+    trans_prob = ... # apply 1 pseudocount
 
-    # Initiate the transition probabilities - an empty matrix
-    trans_probs = ... # look up np.zeros()
+    # Normalize transition matrix
+    trans_prob =  ...
 
-    # Estimate the probabilities
-    for seq in data:
-        for i in range(0, len(seq) - k):
-            # you need to find the current kmer and the next kmer and increment trans_probs[current_kmer][next_kmer_idx] += 1
-            ...
+    return kmer2idx, trans_prob
 
-    # Normalize the transition probabilities!
-    # apply pseudo-count for numeric stability and non-zero probabilities
-    ...
-
-    return kmer2idx, trans_probs
 
 def log_odds_ratio(seq, k, pos_kmer2idx, pos_trans_probs, neg_kmer2idx, neg_trans_probs):
     """
@@ -99,7 +108,7 @@ def log_odds_ratio(seq, k, pos_kmer2idx, pos_trans_probs, neg_kmer2idx, neg_tran
     Inputs
     - seq: a string, the sequence to be classified
     - k: an int, the kmer substring length
-    - pos_kmer2idx: the index system dictionary for the positive transition matrix
+    - pos_kmer2idx: the index system dictionary for the positive (class 1) transition matrix
     - pos_trans_probs: the transition matrix for the positive sequences (class 1 sequences)
     - neg_kmer2idx: same logic as pos_kmer2idx but for the negative sequences (class 0 sequences)
     - neg_trans_probs: same logic as neg_trans_probs but for the negative sequences (class 0 sequences)
@@ -107,10 +116,12 @@ def log_odds_ratio(seq, k, pos_kmer2idx, pos_trans_probs, neg_kmer2idx, neg_tran
     Outputs
     - score: a float, the log odds ratio
     """
+    nt2idx = {'A': 0, 'G': 1, 'T': 2, 'C': 3}
     score = 0
-    for i in range(0, len(seq) - k):
-        ...
+    for i in range(...):
+        # calculate the log odds ratio using the variables passed
     return score
+
 
 def classify(seq, k, pos_kmer2idx, pos_trans_probs, neg_kmer2idx, neg_trans_probs):
     """
@@ -124,15 +135,18 @@ def classify(seq, k, pos_kmer2idx, pos_trans_probs, neg_kmer2idx, neg_trans_prob
     Outputs:
     - returns an integer, 0 or 1
     """
-    ...
+
+    # TODO
+
+    pass
 
 # DO NOT MODIFY THIS
 def main(k):
     """
-    To make your debugging smoother, I included this function to help you debug and test your code out.
+    To make your things smoother, I included this function to help you debug and test your code out.
     Unless you are 100% sure with what you're doing, try not to alter any code from this section.
     This code should split the dataset, train the Markov Chain on the training set, test the MC
-    on the testing set and generate predictions of q3_validation_data.csv that you will upload to
+    on the testing set, and generate predictions of q3_validation_data.csv that you will upload to
     Gradescope for autograding. If your test set achieves an accuracy of 0.97+, you should be good
     to submit your predictions to the autograder.
 
@@ -146,17 +160,13 @@ def main(k):
     print("Building positive transition matrix...")
     positive_idx = np.where(y_train == 1)[0]
     pos_kmer2idx, pos_trans_mat = build_transition_matrix(X_train[positive_idx], k)
-    check_sum_one = np.abs(np.mean(np.sum(pos_trans_mat, axis=1)) - 1.0) < 1e-3
-    if not check_sum_one:
-        print("Positive transition matrix needs to have every row sum to 1!")
+    assert np.abs(np.mean(np.sum(pos_trans_mat, axis=1)) - 1.0) < 1e-3, f"Positive transition matrix needs to have every row sum to 1! Instead it's {np.mean(np.sum(pos_trans_mat, axis=1))}"
 
     # find negative classes (class 0) and build the transition matrix
     print("Building negative transition matrix...")
     negative_idx = np.where(y_train == 0)[0]
     neg_kmer2idx, neg_trans_mat = build_transition_matrix(X_train[negative_idx], k)
-    check_sum_one = np.abs(np.mean(np.sum(neg_trans_mat, axis=1)) - 1.0) < 1e-5
-    if not check_sum_one:
-        print("Negative transition matrix needs to have every row sum to 1!")
+    assert np.abs(np.mean(np.sum(neg_trans_mat, axis=1)) - 1.0) < 1e-5, f"Negative transition matrix needs to have every row sum to 1! Instead it's {np.mean(np.sum(neg_trans_mat, axis=1))}"
 
     print("Classifying testing dataset...")
     y_pred = np.zeros_like(y_test)
