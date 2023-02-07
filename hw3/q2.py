@@ -4,7 +4,6 @@ Course: BIOENG 145/245
 Author: Yorick Chern
 Instructor: Liana Lareau
 Assignment 3
-SOLUTION
 """
 
 import numpy as np
