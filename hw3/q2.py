@@ -194,18 +194,5 @@ def visualize(n_samples, features, k_classes, show_progress=True):
 
 
 if __name__ == '__main__':
-    # visualize(1200, 2, 3)   # you can change these 3 numbers!
-
-
-    # instructor part only
-    # ks = [3, 5, 7, 3]
-    # for i, K in zip(["", "1", "2", "3"], ks):
-    #     file = f"q2_test_data{i}.npy"
-    #     Xy = np.load(file)
-    #     X = Xy[:, :-1]
-    #     y = Xy[:, -1]
-    #     knn = KNearestNeighbors(K)
-    #     y_pred, centers, score = knn.best_cluster(X, 10, show_progress=False)
-    #     print(file)
-    #     print(score)
+    visualize(1200, 2, 3)   # you can change these 3 numbers!
     pass
