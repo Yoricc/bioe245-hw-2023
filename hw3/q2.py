@@ -175,8 +175,8 @@ class KNearestNeighbors:
         return d
 
 def visualize(n_samples, features, k_classes, show_progress=True):
-    X, y = make_data(n_samples, features, k_classes)  # create your own custom data - remember to set features=2 so
-                                    # you can graph the plots
+    X, y = make_data(n_samples, features, k_classes)    # create your own custom data - remember to set features=2 so
+                                                        # you can graph the plots
     K = k_classes
 
     # graph the data (uncomment/comment at your own will)
