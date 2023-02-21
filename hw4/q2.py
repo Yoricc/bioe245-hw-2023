@@ -88,6 +88,7 @@ class LinearRegression:
         - dldw: gradient w.r.t. weights should be of shape (D, 1)
         - dldb: gradient w.r.t. bias should be of shape (1, 1)
         """
+        batch_size, D = X_batch.shape
         dldw = ...
         dldb = ...
         assert dldw.shape == (D, 1), f"dldw shape not {D, 1}, but it is {dldw.shape}"
@@ -130,12 +131,11 @@ if __name__ == '__main__':
     print(lin_reg.squared_gradient(X, y))
 
     """
-    # solution result for lin_reg.squared_gradient
-    (array([[14.94431905],
-       [10.50279425],
-       [14.26940791],
-       [12.08084371],
-       [16.95322833]]), 25.68309656710292)
+    (array([[1.4944319 ],
+       [1.05027943],
+       [1.42694079],
+       [1.20808437],
+       [1.69532283]]), 2.5683096567102917)
     """
 
     # this section tests the entire class, aka the fit function and produces visualization results
