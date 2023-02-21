@@ -5,6 +5,7 @@ Welcome to **Machine Learning in Computational Biology**! This GitHub Repository
  1. Homework 1: linear algebra & probability due 1/31
  2. Homework 2: simulations, Python practice, and Gaussian Discriminant Analysis due 2/6
  3. Homework 3: E&M algorithm, K-Means (optional), Markov modeling due 2/13
+ 4. Homework 4: ML functions, gradient descent due 2/27
 
 Software/Python package requirements:
 
