@@ -88,32 +88,78 @@ class LinearRegression:
         - dldw: gradient w.r.t. weights should be of shape (D, 1)
         - dldb: gradient w.r.t. bias should be of shape (1, 1)
         """
-        ...
+        dldw = ...
+        dldb = ...
         assert dldw.shape == (D, 1), f"dldw shape not {D, 1}, but it is {dldw.shape}"
         return dldw, dldb
 
 if __name__ == '__main__':
-    N = 200
-    D = 1
-    X = np.random.rand(N, D) * 20
 
-    # you can change these 3 numbers - this is the line we want to regress
-    # y = wx + b + noise
-    theta_set = -0.42
-    b_set = -0.13
-    noise = np.random.randn(N, D) * 0.50
+    # this section tests each function (besides lin_reg.fit()) individually
+    X = np.array([[0.48553452, 0.02705233, 0.59605814, 0.50225229, 0.81243239],
+       [0.17469252, 0.25435186, 0.19408888, 0.17743825, 0.13085249],
+       [0.28457151, 0.4112227 , 0.37798194, 0.38538792, 0.52813069],
+       [0.88580912, 0.67981496, 0.68811359, 0.01019072, 0.24051601],
+       [0.43847827, 0.40985491, 0.44461599, 0.38423286, 0.98673558],
+       [0.85719302, 0.11396699, 0.88914111, 0.95473146, 0.98221489],
+       [0.41547788, 0.22504066, 0.96959725, 0.34318878, 0.76847212],
+       [0.749719  , 0.70648943, 0.1026854 , 0.62488796, 0.67939783],
+       [0.16971717, 0.89160743, 0.44127767, 0.33990768, 0.28538788],
+       [0.42643292, 0.50454711, 0.30491342, 0.19072025, 0.3468241 ]])
 
-    graph_progress = True      # turn this to True to visualize your code's progress
+    y = np.array([[0.52060233],
+       [0.48235778],
+       [0.47203745],
+       [0.51458632],
+       [0.70178445],
+       [0.17644808],
+       [0.82841289],
+       [0.7181598 ],
+       [0.80074196],
+       [0.50740697]])
 
-    y = X * theta_set + b_set + noise   # change the coefficients here
+    lin_reg = LinearRegression()
+    lin_reg.theta = np.array([[0.96348654],
+       [0.97798831],
+       [0.47966334],
+       [0.65893575],
+       [0.72210114]])
+    lin_reg.bias = np.array([[0.05831978]])
+
+    print(lin_reg.squared_error(X, y))  # solution result: 19.71525196568432
+    print(lin_reg.squared_gradient(X, y))
+
+    """
+    # solution result for lin_reg.squared_gradient
+    (array([[14.94431905],
+       [10.50279425],
+       [14.26940791],
+       [12.08084371],
+       [16.95322833]]), 25.68309656710292)
+    """
+
+    # this section tests the entire class, aka the fit function and produces visualization results
+    # N = 200
+    # D = 1
+    # X = np.random.rand(N, D) * 20
+
+    # # you can change these 3 numbers - this is the line we want to regress
+    # # y = wx + b + noise
+    # theta_set = -0.42
+    # b_set = -0.13
+    # noise = np.random.randn(N, D) * 0.50
+
+    # graph_progress = True      # turn this to True to visualize your code's progress
+
+    # y = X * theta_set + b_set + noise   # change the coefficients here
 
 
-    lin_reg = LinearRegression(gd='mb')
-    theta, bias, losses = lin_reg.fit(X, y, lr=5e-5, epochs=1000)   # these parameters work the best
+    # lin_reg = LinearRegression(gd='mb')
+    # theta, bias, losses = lin_reg.fit(X, y, lr=5e-5, epochs=1000)   # these parameters work the best
 
-    if graph_progress:
-        graph(X, y, title=f"y = {theta_set}x + {b_set} + noise")
-        graph_line(X, y, theta, bias)
-        graph_losses(losses)
+    # if graph_progress:
+    #     graph(X, y, title=f"y = {theta_set}x + {b_set} + noise")
+    #     graph_line(X, y, theta, bias)
+    #     graph_losses(losses)
 
     pass
