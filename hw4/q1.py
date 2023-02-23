@@ -71,8 +71,8 @@ def k_fold_cv(X, y, k_folds=5, shuffle=True):
         dataset[k] = train([X1, X3, .., X_(k-1)]) + test(Xk)
 
         example output:
-        >>> X = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        >>> y = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        >>> X = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        >>> y = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         >>> dataset = k_fold_cv(X, y, k_fold=5, shuffle=False)
         >>> dataset
             [        
