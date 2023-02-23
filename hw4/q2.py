@@ -59,9 +59,9 @@ class LinearRegression:
         ...
         return self.theta, self.bias, losses
 
-    def squared_error(self, X, y):
+    def mean_squared_error(self, X, y):
         """
-        Q:  use X, y, and self.theta to calculate the sum-squared-error.
+        Q:  use X, y, and self.theta to calculate the mean-squared-error.
 
         Inputs
         - X: data matrix (N, D)
@@ -74,9 +74,9 @@ class LinearRegression:
         loss = ...
         return loss
 
-    def squared_gradient(self, X_batch, y_batch):
+    def mean_squared_gradient(self, X_batch, y_batch):
         """
-        Q:  calculate the gradient of the squared error w.r.t. self.theta, the weights,
+        Q:  calculate the gradient of the mean-squared-error w.r.t. self.theta, the weights,
         and self.bias, the bias
 
         Inputs
@@ -126,10 +126,11 @@ if __name__ == '__main__':
        [0.72210114]])
     lin_reg.bias = np.array([[0.05831978]])
 
-    print(lin_reg.squared_error(X, y))  # solution result: 19.71525196568432
-    print(lin_reg.squared_gradient(X, y))
+    print(lin_reg.mean_squared_error(X, y))  # solution result: 1.971525196568432
+    print(lin_reg.mean_squared_gradient(X, y))
 
     """
+    mean_squared_gradient should look like this
     (array([[1.4944319 ],
        [1.05027943],
        [1.42694079],
