@@ -120,7 +120,7 @@ def k_fold_cv(X, y, k_folds=5, shuffle=True):
 def normalize(X):
     """
     Q:  normalize the dataset X along the feature dimension.
-        use the formula: (X - mean) / variance
+        use the formula: (X - mean) / standard_deviation
 
     Inputs
     - X: np.ndarray with shape (N, D)
