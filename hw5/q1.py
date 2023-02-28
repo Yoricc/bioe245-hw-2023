@@ -9,11 +9,12 @@ import numpy as np
 
 def linear_forward(X, w, b):
     """
-    Q:  calculate the linear forward pass of a layer Z = Xw + b
+    Q:  calculate the output of a node with no activation function: Z = Xw + b 
 
     Inputs
     - X: input matrix (N, D)
-    - w: linear layer weight matrix (D, 1)
+    - w: linear node weight matrix (D, 1)
+    - b: a scalar bias term
     """
 
     # make sure w is of shape (D, 1)
@@ -27,7 +28,7 @@ def linear_backward(X, w, b):
     Outputs a tuple of...
     - (dZdw, dZdb)
     """
-    ...
+   	...
     return ...
 
 def relu_forward(X):
@@ -56,7 +57,7 @@ def softmax_forward(X):
     """
     N, D = X.shape
     ...
-    return dist
+    return ...
 
 def softmax_backward(X):
     """
@@ -68,7 +69,7 @@ def softmax_backward(X):
 
 if __name__ == '__main__':
 
-    # due to popular demand - we have made the test cases a lot clearer and much less random chance-dependent!
+    # due to popular demand, we have increased the number and clarity of test cases available to you
 
     # we will use this (5, 8) matrix to test all the functions above!
     X = np.array([[-0.38314889,  0.35891731,  0.09037955,  0.98397352, -0.74292248, -0.5883056,  0.54354937,  0.79001348],
