@@ -13,11 +13,10 @@ def linear_forward(X, w, b):
 
     Inputs
     - X: input matrix (N, D)
-    - w: linear node weight matrix (D, 1)
+    - w: linear node weight matrix (D, D')
     - b: a scalar bias term
     """
 
-    # make sure w is of shape (D, 1)
     ...
     return ...
 
@@ -190,7 +189,7 @@ if __name__ == '__main__':
                     [0., 0., 1., 0., 0., 0.]])
     assert np.all(np.abs(rbt - relu_back_test) < 1e-20), "relu gradient incorrect!"
 
-    linear_back_test, bias_back_test = linear_backward(linear_test, X, w, b)
+    linear_back_test, bias_back_test = linear_backward(X, w, b)
     print("linear_back_test")
     print(linear_back_test)
     lbt = np.array([[-0.38314889,  0.35891731,  0.09037955,  0.98397352, -0.74292248, -0.5883056,  0.54354937,  0.79001348],
@@ -201,3 +200,5 @@ if __name__ == '__main__':
     assert np.all(np.abs(lbt - linear_back_test) < 1e-10), "Linear gradient incorrect!"
     print("bias")
     print(bias_back_test)   # should be 1
+
+    print("All tests passed!")
