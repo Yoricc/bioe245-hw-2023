@@ -133,7 +133,7 @@ if __name__ == '__main__':
     assert np.all(np.abs(np.sum(softmax_test, axis=1) - 1.0) < 1e-10), "Rows of softmax output need to sum to 1!"
 
     # backward pass
-    softmax_back_test = softmax_backward(softmax_test)
+    softmax_back_test = softmax_backward(relu_test)
     print(softmax_back_test)
 
     """
