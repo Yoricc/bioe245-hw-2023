@@ -43,6 +43,9 @@ def relu_forward(X):
 def relu_backward(X):
     """
     Q:  Z = relu(X) = max(X, 0), find dZ/dX
+
+    Inputs
+    - X: input matrix (N, D)
     """
     ...
     return ...
